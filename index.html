@@ -7,17 +7,15 @@
 -->
 
     <head>
-    <meta charset="UTF 8">
+    <meta charset="UTF-8">
     <title>Tony's Matchmaker</title>
 </head>
 
 <body> 
-    <h1>&#128525 Tony's Matchmaker &#128525</h1>
+    <h1>&#128525; Tony's Matchmaker &#128525;</h1>
     <p>Instructions: Please answer the following questions below. By agreeing or disagreeing with <br>
          the below statements, we can determine our compatibility and determine whether we should <br>
           hang out or not!</p>
-
-    <!-- Reference for HTML "option" tabs/fields: https://www.w3schools.com/tags/tag_option.asp -->
 
     <label>Football is the best sport of all time.</label><br />
     <select id="q1">
@@ -71,12 +69,17 @@
     <br /><br /><br />
     <button onclick="CalculateCompatibility()">Calculate Compatibility</button>
     <p id="compatibility"></p>
+    <p id="Message"></p>
 
  <script>
 console.log("Starting Matchmaker...");
 
 function CalculateCompatibility() {
         console.log("CalculateCompatibility()");
+    
+        const FINAL_COMMENT_GREAT="We're a match! &#128151;"
+        const FINAL_COMMENT_GOOD="You're okay &#129312;"
+        const FINAL_COMMENT="Please stay away &#128517;"
 
         const DESIRED_RESPONSE = [
             5, /* strongly agree */
@@ -89,14 +92,12 @@ function CalculateCompatibility() {
 
         const MAX_SCORE = 25
 
-        //Get the current values of the dropdown controls.
         let question1Response = document.getElementById("q1").selectedOptions[0].value;
         let question2Response = document.getElementById("q2").selectedOptions[0].value;
         let question3Response = document.getElementById("q3").selectedOptions[0].value;
         let question4Response = document.getElementById("q4").selectedOptions[0].value;
         let question5Response = document.getElementById("q5").selectedOptions[0].value;
 
-        // Optionally log the values associated with question 1 through 5 to the console.
         console.log("Question 1 Answers:")
         console.log(document.getElementById("q1").selectedOptions[0].text);
         console.log(document.getElementById("q1").selectedOptions[0].value);
@@ -122,7 +123,6 @@ function CalculateCompatibility() {
         console.log(document.getElementById("q5").selectedOptions[0].value);
         console.log(question5Response);
 
-         // Todo: Calculate compatibility scores.
         let question1Compatibility = 5 - Math.abs(question1Response - DESIRED_RESPONSE[0]);
         let question2Compatibility = 5 - Math.abs(question2Response - DESIRED_RESPONSE[1]);
         let question3Compatibility = 5 - Math.abs(question3Response - DESIRED_RESPONSE[2]);
@@ -136,10 +136,8 @@ function CalculateCompatibility() {
         console.log(question4Compatibility);
         console.log(question5Compatibility);
 
-        //Calculate total compatibility.
         let totalCompatibility = question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility;
 
-        //Convert totalCompatibility to a percentage.
         totalCompatibility *= 100 / MAX_SCORE;
         totalCompatibility = Math.round(totalCompatibility)
         console.log("tc="+ totalCompatibility);
@@ -148,6 +146,18 @@ function CalculateCompatibility() {
 
 
         document.getElementById("compatibility").innerHTML= "Your compatibility is: " + totalCompatibility;
+        console.log("totalCompaptibility="+totalCompatibility);
+
+        if (totalCompatibility < 50) {
+            console.log(FINAL_COMMENT);
+            document.getElementById("Message").innerHTML=FINAL_COMMENT
+        } else if (totalCompatibility <70) {
+            console.log(FINAL_COMMENT_GOOD);
+            document.getElementById("Message").innerHTML=FINAL_COMMENT_GOOD
+        } else {
+            console.log(FINAL_COMMENT_GREAT);
+            document.getElementById("Message").innerHTML=FINAL_COMMENT_GREAT
+        }
     }
 
     </script>
